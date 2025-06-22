@@ -109,27 +109,34 @@ Untuk mengukur relevansi dan kualitas sistem rekomendasi berbasis konten, diguna
 
 | Metrik              | Nilai rata-rata                                          |
 |--------------------|----------------------------------------------------|
-| Precision@5        | 0.0680     |
-| Recall@5        | 0.0097 |
-| NCDG@5           | 0.0815 |
+| Precision@5        | 0.0833     |
+| Recall@5        | 0.0032 |
+| NCDG@5           | 0.0905 |
 
 ---
 
 ### Analisis Hasil
 
-Berdasarkan hasil evaluasi, model cukup baik dalam mengurutkan film yang mirip, tetapi keterbatasan konten deskriptif (hanya judul & genre) membuat relevansi personal masih rendah.
+Nilai Precision@5 yang mendekati 0.08 mengindikasikan bahwa, secara rata-rata, sekitar 8% dari hasil rekomendasi (Top-5) merupakan film yang juga disukai oleh pengguna berdasarkan data historis. Sementara itu, nilai Recall@5 yang rendah menunjukkan bahwa sistem hanya berhasil menemukan sebagian sangat kecil dari seluruh film relevan yang disukai pengguna. Hal ini dapat terjadi karena pendekatan Content-Based Filtering (CBF) tidak mempertimbangkan preferensi pengguna lain (tidak personal), dan hanya fokus pada konten item seperti judul dan genre.
+
+Meskipun demikian, nilai NDCG@5 yang lebih tinggi dibanding Recall menunjukkan bahwa item yang relevan cenderung muncul di peringkat atas hasil rekomendasi, sehingga sistem masih memiliki kemampuan dalam mengurutkan rekomendasi secara semantik.
  
 ---
 
 ## Business Impact
 
-✅ Scalable untuk cold-start user: CBF bisa digunakan meskipun tidak ada data interaksi.
-✅ Mudah diintegrasikan dengan metadata film: Dapat dipadukan dengan rating, genre, sinopsis.
-✅ Bermanfaat untuk rekomendasi awal pengguna baru di platform streaming seperti Netflix atau Disney+.
-✅ Bisa dikombinasikan dengan Collaborative Filtering untuk hasil yang lebih personal (hybrid model).
+✅ Scalable untuk kasus cold-start — Content-Based Filtering (CBF) tetap dapat merekomendasikan item meskipun tidak tersedia data interaksi pengguna.
+
+✅ Integrasi mudah dengan metadata film — Sistem dapat diperluas menggunakan sinopsis, rating, bahkan cast atau director sebagai fitur tambahan.
+
+✅ Cocok untuk rekomendasi awal pengguna baru — Platform streaming seperti Netflix dan Disney+ dapat memanfaatkan pendekatan ini untuk memulai profil rekomendasi sebelum cukup data interaksi terkumpul.
+
+✅ Potensial untuk dikombinasikan dalam model hybrid — CBF dapat digabung dengan Collaborative Filtering untuk meningkatkan personalisasi dan akurasi rekomendasi di tahap lanjutan.
 
 ---
 
 ## Kesimpulan
 
-Proyek ini berhasil membangun sistem rekomendasi film menggunakan pendekatan Content-Based Filtering dengan Sentence-BERT. Dengan memanfaatkan representasi semantik dari judul dan genre film, sistem mampu memberikan rekomendasi berdasarkan kemiripan konten. Evaluasi menggunakan Precision@5, Recall@5, dan NDCG@5 menunjukkan bahwa meskipun model belum sangat akurat, pendekatan ini relevan untuk cold-start problem dan bisa menjadi fondasi sistem rekomendasi hybrid di masa depan.
+Proyek ini berhasil mengembangkan sistem rekomendasi film berbasis Content-Based Filtering menggunakan representasi semantik dari judul dan genre film melalui Sentence-BERT. Sistem memberikan rekomendasi berdasarkan kemiripan konten antar film, tanpa memerlukan data interaksi pengguna.
+
+Evaluasi dengan metrik Top-N seperti Precision@5, Recall@5, dan NDCG@5 menunjukkan bahwa sistem mampu menghasilkan rekomendasi relevan meskipun belum sangat presisi. Hasil ini mencerminkan karakteristik CBF yang efektif dalam menangani cold-start problem, dan menunjukkan potensi sistem untuk dikembangkan menjadi sistem rekomendasi hybrid yang lebih adaptif dan personal di masa mendatang.
