@@ -10,9 +10,9 @@ Proyek ini membangun sistem rekomendasi film dengan pendekatan Content-Based Fil
 
 **References:**
 
-[1] [A Systematic Review and Research Perspective on Recommender System](https://doi.org/10.1186/s40537-022-00592-5) 
+[1] [A Systematic Review and Research Perspective on Recommender System](https://doi.org/10.1186/s40537-022-00592-5)
 
-[2] [A Comparative Study of Collaborative Movie Recommendation System. IEEE.](https://doi.org/10.1109/ICEARS53579.2022.9752015) 
+[2] [A Comparative Study of Collaborative Movie Recommendation System. IEEE.](https://doi.org/10.1109/ICEARS53579.2022.9752015)
 
 [3] [Model for Movie Recommendation System using Collaborative Filtering and Content-Based Filtering Techniques. IEEE.](https://doi.org/10.1109/CICTN64563.2025.10932600)
 
@@ -31,7 +31,7 @@ Proyek ini membangun sistem rekomendasi film dengan pendekatan Content-Based Fil
 - Mengembangkan sistem rekomendasi film berbasis konten yang mampu menyarankan film serupa menggunakan informasi deskriptif dari film (judul dan genre).
 - Menghasilkan rekomendasi Top-5 film yang relevan untuk setiap film input menggunakan pendekatan semantic text embedding.
 - Mengevaluasi performa sistem menggunakan metrik Top-N (Precision@5, Recall@5, dan NDCG@5) guna menilai kualitas dan urutan relevansi hasil rekomendasi.
-  
+
 ### Solution Statements
 
 - Menggunakan Content-Based Filtering berbasis embedding kalimat dari SBERT.
@@ -60,7 +60,7 @@ Dataset diambil dari Kaggle dengan judul: [Movielens dataset](https://www.kaggle
 | movieId        | ID unik film           |
 | title        | Judul film |
 | genres           | Genre film |
-| rating      | Nilai rating (0.5-5.0 |
+| rating      | Nilai rating (0.5-5.0) |
 
 ---
 
@@ -120,7 +120,7 @@ Untuk mengukur relevansi dan kualitas sistem rekomendasi berbasis konten, diguna
 Nilai Precision@5 yang mendekati 0.08 mengindikasikan bahwa, secara rata-rata, sekitar 8% dari hasil rekomendasi (Top-5) merupakan film yang juga disukai oleh pengguna berdasarkan data historis. Sementara itu, nilai Recall@5 yang rendah menunjukkan bahwa sistem hanya berhasil menemukan sebagian sangat kecil dari seluruh film relevan yang disukai pengguna. Hal ini dapat terjadi karena pendekatan Content-Based Filtering (CBF) tidak mempertimbangkan preferensi pengguna lain (tidak personal), dan hanya fokus pada konten item seperti judul dan genre.
 
 Meskipun demikian, nilai NDCG@5 yang lebih tinggi dibanding Recall menunjukkan bahwa item yang relevan cenderung muncul di peringkat atas hasil rekomendasi, sehingga sistem masih memiliki kemampuan dalam mengurutkan rekomendasi secara semantik.
- 
+
 ---
 
 ## Business Impact
