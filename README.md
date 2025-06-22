@@ -46,29 +46,43 @@ Proyek ini membangun sistem rekomendasi film dengan pendekatan Content-Based Fil
 Dataset diambil dari Kaggle dengan judul: [Movielens dataset](https://www.kaggle.com/datasets/ayushimishra2809/movielens-dataset).
 
 ### Informasi Dataset:
+**1️⃣ Dataset `movies.csv`**
+- **Ukuran**: 10.329 baris × 3 kolom  
+- **Fitur**:
+  - `movieId`: ID unik untuk tiap film  
+  - `title`: Judul film beserta tahun rilis  
+  - `genres`: Genre film (dipisahkan oleh simbol `|`)
 
-- **Jumlah data**: 10.329 baris × 3 kolom (movies dataset) & 105.339 baris × 3 kolom (ratings dataset)
-- **Kondisi data**:
-  - Tidak ditemukan missing value
-  - Tidak ada duplikasi data
-- **Sumber data**: [Movielens dataset](https://www.kaggle.com/datasets/ayushimishra2809/movielens-dataset).
+**2️⃣ Dataset `ratings.csv`**
+- **Ukuran**: 105.339 baris × 4 kolom (`timestamp` tidak digunakan)  
+- **Fitur**:
+  - `userId`: ID unik pengguna  
+  - `movieId`: ID film yang diberi rating  
+  - `rating`: Skor penilaian (skala 0.5–5.0)  
+  - `timestamp`: Timestamp penilaian (**tidak digunakan** dalam proyek ini)
 
-### Fitur Dataset:
-
-| Fitur              | Deskripsi                                          |
-|--------------------|----------------------------------------------------|
-| movieId        | ID unik film           |
-| title        | Judul film |
-| genres           | Genre film |
-| rating      | Nilai rating (0.5-5.0) |
-
+### Kondisi Data
+- **Missing Values**: Tidak ditemukan missing values pada kolom yang digunakan (`movieId`, `title`, `genres`, `rating`).  
+- **Duplikasi**: Tidak terdapat baris duplikat pada dataset `movies.csv`.  
+- **Outlier**: Ditemukan beberapa nilai ekstrem pada kolom `rating`, dengan nilai minimum 0.5 yang secara distribusi menyimpang dari rata-rata (mean = 3.51). Meskipun demikian, nilai tersebut masih valid secara konteks sistem rating.
+Kalau kamu mau aku tambahkan bagian lain seperti Modeling, Evaluation, atau License,
 ---
 
 ## Data Preparation
 
-- **Gabungan fitur**: Menggabungkan title dan genres menjadi text untuk proses embedding.
-- **Pembersihan teks**: Menghapus genre kosong & normalisasi teks untuk meningkatkan kualitas embedding
-- **Embedding dengan SBERT**: Menggunakan model all-MiniLM-L6-v2 untuk menghasilkan representasi vektor berdimensi 384 untuk setiap film
+Beberapa tahapan persiapan data dilakukan sebelum masuk ke proses embedding dan pemodelan:
+- **Pembersihan teks**:
+  - Dilakukan normalisasi teks: konversi ke huruf kecil, penghapusan tanda baca, dan penghapusan genre kosong (`(no genres listed)`) untuk memastikan kualitas embedding yang lebih baik.
+  
+- **Gabungan fitur konten**:
+  - Kolom `title` dan `genres` dari dataset `movies.csv` digabungkan menjadi satu string teks sebagai representasi awal konten film.
+
+- **Embedding dengan SBERT**:
+  - Menggunakan model **`all-MiniLM-L6-v2`** dari **Sentence-BERT** untuk mentransformasikan teks gabungan menjadi vektor berdimensi 384. Representasi ini akan digunakan dalam perhitungan kemiripan antar film.
+ 
+- **Filtering data**: 
+  - Hanya menyertakan rating dengan nilai ≥ 4.0 sebagai indikator bahwa pengguna menyukai film tersebut.
+  - Hanya pengguna yang telah memberi rating ≥ 4.0 pada minimal 6 film yang disertakan. Hal ini bertujuan untuk mengurangi noise dari pengguna pasif dan memastikan kualitas data untuk pelatihan serta evaluasi sistem rekomendasi.
 
 ---
 
@@ -121,6 +135,14 @@ Nilai Precision@5 yang mendekati 0.08 mengindikasikan bahwa, secara rata-rata, s
 
 Meskipun demikian, nilai NDCG@5 yang lebih tinggi dibanding Recall menunjukkan bahwa item yang relevan cenderung muncul di peringkat atas hasil rekomendasi, sehingga sistem masih memiliki kemampuan dalam mengurutkan rekomendasi secara semantik.
 
+---
+
+### Contoh Hasil Rekomendasi Sistem
+
+| userId | Liked Movies | Top-5 Recommendations |
+|--------|--------------|------------------------|
+| 317 | One Fine Day (1996), I Know What You Did Last Summer (1997), Titanic (1997), Friday the 13th (1980), Outsiders, The (1983), Secret of NIMH, The (1982), Karate Kid, Part III, The (1989), Thirteenth Floor, The (1999), Live and Let Die (1973), Moonraker (1979), City Slickers (1991), A-Team, The (2010), Inception (2010), King's Speech, The (2010), Adjustment Bureau, The (2011), Horrible Bosses (2011), Help, The (2011), Descendants, The (2011), Extremely Loud and Incredibly Close (2011), One for the Money (2012), October Baby (2011), Lucky One, The (2012), Jumping the Broom (2011) | Thirteen (2003), 2012 (2009), Extracted (2012), In Darkness (2011), Young Adult (2011) |
+| 298 | Faces (1968), Manhattan (1979), Buffalo '66 (a.k.a. Buffalo 66) (1998), Blue Velvet (1986), Ghostbusters II (1989), Man Bites Dog (C'est arrivé près de chez vous) (1992), Mirror, The (Zerkalo) (1975), Eraserhead (1977), Mulholland Drive (2001), Wild at Heart (1990), Naked Lunch (1991), Persona (1966), 3 Women (Three Women) (1977), Topo, El (1970), Holy Mountain, The (Montaña sagrada, La) (1973), Inland Empire (2006), House (Hausu) (1977), Dogtooth (Kynodontas) (2009) | Extracted (2012), [REC] (2007), 21 (2008), Wild (2014), Images (1972) |
 ---
 
 ## Business Impact
