@@ -32,20 +32,8 @@ from tqdm import tqdm
 
 """### Load Dataset
 
-Dataset yang digunakan dalam proyek ini berjudul **"Amazon Electronics Products 10k items - 2023"**, yang diambil dari platform Kaggle:
-https://www.kaggle.com/datasets/akeshkumarhp/electronics-products-amazon-10k-items/data berisi 9.600 baris dan 10 kolom.
-
-Kolom:
-- Idx
-- Name
-- Main Category
-- Sub Category
-- Image
-- Link
-- Ratings
-- Num of Ratings
-- Discount Price
-- Actual
+Dataset yang digunakan dalam proyek ini berjudul **"Movielens"**, yang diambil dari platform Kaggle:
+https://www.kaggle.com/datasets/ayushimishra2809/movielens-dataset
 """
 
 from google.colab import drive
